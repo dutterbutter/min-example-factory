@@ -27,15 +27,12 @@ contract ChildFactory {
                 uint128(0),
                 abi.encodeCall(
                     DEPLOYER_SYSTEM_CONTRACT.create2,
-                    (salt, bytecodeHash, inputData)
+                    (salt, childBytecodeHash, input)
                 )
             );
 
-        if (!success) {
-            revert Create2FailedDeployment();
-        }
+        require(success, "Deployment failed");
 
-        create2Address = abi.decode(returnData, (address));
-        console.log("Contract deployed at:", create2Address);
+        childAddress = abi.decode(returnData, (address));
     }
 }

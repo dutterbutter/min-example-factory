@@ -3,4 +3,9 @@ src = "src"
 out = "out"
 libs = ["lib"]
 
-# See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
+[profile.default.zksync]
+enable_eravm_extensions = true
+zksolc = "1.5.8"
+
+[rpc_endpoints]
+zksync-sepolia = "https://sepolia.era.zksync.dev"
