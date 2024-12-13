@@ -7,4 +7,8 @@ contract Child {
     constructor(string memory _greeting) {
         greeting = _greeting;
     }
+
+    function setGreetingMan3(string memory _greeting) public {
+        greeting = _greeting;
+    }
 }

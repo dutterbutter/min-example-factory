@@ -1,66 +1,59 @@
-## Foundry
+## Debugging
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+## Getting Started
 
-Foundry consists of:
+To get started with this repository, follow the steps below:
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+### 1. Clone the repository
 
-## Documentation
-
-https://book.getfoundry.sh/
-
-## Usage
-
-### Build
-
-```shell
-$ forge build
+```bash
+git clone git@github.com:dutterbutter/min-example-factory.git
 ```
 
-### Test
+Navigate into the project directory:
 
-```shell
-$ forge test
+```bash
+cd min-example-factory
 ```
 
-### Format
+Update `.env` file to own PK. 
 
-```shell
-$ forge fmt
+### 2. Install Dependencies
+
+Install the necessary dependencies using `forge`:
+
+```bash
+forge install
 ```
 
-### Gas Snapshots
+### 3. Build the Project for ZKsync
 
-```shell
-$ forge snapshot
+To build the project for ZKsync, run:
+
+```bash
+forge build --zksync
 ```
 
-### Anvil
+You may encounter a compilation error due to a placeholder value in the system contracts library.
 
-```shell
-$ anvil
+### 4. Fix the Compilation Error
+
+To fix the compilation error, navigate to the `Constants.sol` file in the `era-contracts` library and replace the placeholder value with the actual system contract offset value:
+
+- File: `lib/era-contracts/system-contracts/contracts/Constants.sol:20:44`
+  
+- Change:
+
+```solidity
+uint160 constant SYSTEM_CONTRACTS_OFFSET = {{SYSTEM_CONTRACTS_OFFSET}}; // 2^15
 ```
 
-### Deploy
+- To:
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
+```solidity
+uint160 constant SYSTEM_CONTRACTS_OFFSET = 0x8000; // 2^15
 ```
 
-### Cast
+### 5. Run script
 
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+`forge script script/DeployChild.s.sol --rpc-url zksync-sepolia --skip-simulation -vvvv --zksync --broadcast`
