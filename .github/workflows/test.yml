@@ -10,9 +10,6 @@ env:
 
 jobs:
   check:
-    strategy:
-      fail-fast: true
-
     name: Foundry project
     runs-on: ubuntu-latest
     steps:
@@ -20,10 +17,8 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Install Foundry
-        uses: foundry-rs/foundry-toolchain@v1
-        with:
-          version: nightly
+      - name: Install Foundry-ZKsync
+        uses: dutterbutter/foundry-zksync-toolchain@db/fix-cache-issue
 
       - name: Show Forge version
         run: |
