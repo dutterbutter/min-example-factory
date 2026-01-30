@@ -15,7 +15,7 @@ jobs:
           submodules: recursive
 
       - name: Install Foundry-ZKsync
-        uses: dutterbutter/foundry-zksync-toolchain@db/fix-cache-issue
+        uses: dutterbutter/foundry-zksync-toolchain@v2
 
       - name: Show Forge version
         run: |
