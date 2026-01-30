@@ -1,24 +1,40 @@
-// SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.13;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
 
-import {Test, console} from "forge-std/Test.sol";
-import {Counter} from "../src/Counter.sol";
+import "forge-std/Test.sol";
+import "../src/Counter.sol";
 
 contract CounterTest is Test {
-    Counter public counter;
+    Counter counter;
 
     function setUp() public {
         counter = new Counter();
-        counter.setNumber(0);
     }
 
-    function test_Increment() public {
+    function testInitialCountIsZero() public {
+        assertEq(counter.count(), 0);
+    }
+
+    function testIncrement() public {
         counter.increment();
-        assertEq(counter.number(), 1);
+        assertEq(counter.count(), 1);
     }
 
-    function testFuzz_SetNumber(uint256 x) public {
-        counter.setNumber(x);
-        assertEq(counter.number(), x);
+    function testDecrement() public {
+        counter.increment();
+        counter.decrement();
+        assertEq(counter.count(), 0);
+    }
+
+    function testReset() public {
+        counter.increment();
+        counter.increment();
+        counter.reset();
+        assertEq(counter.count(), 0);
+    }
+
+    function testDecrementRevertsWhenZero() public {
+        vm.expectRevert(); // underflow revert in Solidity ^0.8.x
+        counter.decrement();
     }
 }

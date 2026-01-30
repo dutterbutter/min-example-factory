@@ -1,0 +1,8 @@
+{
+  "lib/forge-std": {
+    "rev": "1eea5bae12ae557d589f9f0f0edae2faa47cb262"
+  },
+  "lib/forge-zksync-std": {
+    "rev": "be9f6abc54b36f5c4d162c47fd50b8075aee3949"
+  }
+}
