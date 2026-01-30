@@ -11,22 +11,15 @@ contract ChildFactory {
         childBytecodeHash = _childBytecodeHash;
     }
 
-    function deployChild(
-        bytes32 salt,
-        string calldata greeting
-    ) external returns (address childAddress) {
+    function deployChild(bytes32 salt, string calldata greeting) external returns (address childAddress) {
         bytes memory input = abi.encode(greeting);
 
-        (bool success, bytes memory returnData) = SystemContractsCaller
-            .systemCallWithReturndata(
-                uint32(gasleft()),
-                address(DEPLOYER_SYSTEM_CONTRACT),
-                uint128(0),
-                abi.encodeCall(
-                    DEPLOYER_SYSTEM_CONTRACT.create2,
-                    (salt, childBytecodeHash, input)
-                )
-            );
+        (bool success, bytes memory returnData) = SystemContractsCaller.systemCallWithReturndata(
+            uint32(gasleft()),
+            address(DEPLOYER_SYSTEM_CONTRACT),
+            uint128(0),
+            abi.encodeCall(DEPLOYER_SYSTEM_CONTRACT.create2, (salt, childBytecodeHash, input))
+        );
 
         require(success, "Deployment failed");
 
